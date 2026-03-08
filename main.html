@@ -14,7 +14,7 @@
 
     <title>Issues | Github Tracker</title>
 </head>
-<body class="bg-[#F8FAFC] min-h-screen">
+<body class="bg-[#F8FAFC] min-h-screen pb-15">
 
     <!-- navbar -->
     <section class="navbar bg-white shadow-sm">
@@ -52,9 +52,9 @@
         </div>
     </section>
     
-    <!-- tab section --md:w-7/10 -->
+    <!-- tab section --md:w-8/10 -->
     <section class="">
-        <div class="sm:w-11/12 mx-auto p-6 m-0 bg-white shadow-sm rounded-lg md:w-7/10 md:mt-14">
+        <div class="sm:w-11/12 mx-auto p-6 m-0 bg-white shadow-sm rounded-lg md:w-8/10 md:mt-14">
             <!-- jobs toggles -->
             <div class="space-x-2">
                 <button onclick="showOnly(), toggleBtn0()" id="" class="btn bg-primary text-white px-7 md:px-12">All</button>
@@ -65,47 +65,23 @@
     </section>
 
     <!-- issues section -->
-    <section class="sm:w-11/12 mx-auto p-6 mt-4 bg-white shadow-md rounded-t-lg md:w-7/10">
+    <section class="sm:w-11/12 sm:mt-4 mt-1 mx-auto p-6 bg-white shadow-md rounded-t-lg md:w-8/10">
         <div id="" class="bg-white flex items-center">
-            <div class="bg-[#ECE4FF] h-12 w-12 flex items-center justify-center rounded-full mr-2"><img src="./assets/Aperture.png" alt=""></div>
+            <div class="sm:h-12 sm:w-12 h-6 bg-[#ECE4FF] flex items-center justify-center rounded-full mr-2"><img src="./assets/Aperture.png" alt=""></div>
             <div class="">
-                <h2 class="font-semibold text-xl text-[#1F2937]"><span id="total-issues"></span> Issues</h2>
-                <p class="text-base text-[#64748B]">Track and manage your project issues</p>
+                <h2 class="sm:text-xl font-semibold text-base text-[#1F2937]"><span id="total-issues"></span> Issues</h2>
+                <p class="sm:text-base text-xs text-[#64748B]">Track and manage your project issues</p>
             </div>
             <div class="flex gap-4 ml-auto">
-                <p class="text-base font-medium"><i class="fa-solid fa-circle text-xs text-[#00A96E]"></i> Open</p>
-                <p class="text-base font-medium"><i class="fa-solid fa-circle text-xs text-[#A855F7]"></i> Closed</p>
+                <p class="sm:text-base text-xs font-medium"><i class="fa-solid fa-circle text-xs text-[#00A96E]"></i> Open</p>
+                <p class="sm:text-base text-xs font-medium"><i class="fa-solid fa-circle text-xs text-[#A855F7]"></i> Closed</p>
             </div>
         </div>
     </section>
     
     <!-- card designing -->
-    <section class="border-t border-[#d7d7d9] bg-[#FBFBFB] sm:w-11/12 mx-auto p-6 shadow-md rounded-b-lg md:w-7/10">
-        <div class="card bg-base-100 shadow-md rounded-xl w-70 border border-base-200">
-            <div class="card-body p-4 gap-3">
-
-                <div class="flex items-center justify-between">
-                    <img src="./assets/Open-Status.png" alt="Open-Status">
-                    <span class="badge bg-red-100 text-red-400 border-none font-semibold text-xs px-7 py-2 rounded-full">HIGH</span>
-                </div>
-                
-                <h2 id="" class="card-title text-sm font-semibold pt-1">Fix Navigation Menu On Mobile Devices</h2>
-                <p id="" class="text-sm text-[#64748B]">The navigation menu doesn't collapse properly on mobile devices…</p>
-
-                <!-- tags -->
-                <div class="flex gap-2 flex-wrap">
-                    <span class="badge bg-red-100 text-red-400 border-[#EF4444] font-semibold text-xs px-3 py-2 rounded-full gap-1"><i class="fa-solid fa-bug"></i> BUG</span>
-                    <span class="badge bg-yellow-100 text-yellow-600 border-[#D97706] font-semibold text-xs px-3 py-2 rounded-full gap-1"><i class="fa-regular fa-life-ring"></i> HELP WANTED</span>
-                </div>
-
-                <div class="divider my-0"></div>
-
-                <div class="text-xs text-[#64748B] space-y-2">
-                    <p>#<span id="">1</span> by <span id="">john_doe</span></p>
-                    <p id="">1/15/2024</p>
-                </div>
-            </div>
-        </div>
+    <section id="issues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch border-t border-[#d7d7d9] bg-[#FBFBFB] sm:w-11/12 mx-auto p-6 shadow-md rounded-b-lg md:w-8/10">
+        <!-- card's codes -->
     </section>
 
     <script src="./scripts/main.js"></script>
