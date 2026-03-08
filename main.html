@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- daisyUI + tailwind -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./styles.css">     <!-- style file -->
+    <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+
+    <title>Issues | Github Tracker</title>
+</head>
+<body class="bg-[#F8FAFC]">
+
+    <!-- navbar -->
+    <section class="navbar bg-white shadow-sm">
+        <div class="w-11/12 mx-auto flex justify-between items-center">
+            <!-- Left: Logo -->
+            <div class="flex items-center gap-2">
+            <img src="./assets/github-logo.png" class="h-9" alt="github-logo">
+            <a class="btn btn-ghost text-[22px]">GitHub Issues Tracker</a>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-4">
+                <label class="input input-bordered border-[#E4E4E7] w-[300px] text-base text-[#64748B]">
+                    <i class="fa-solid fa-magnifying-glass opacity-50"></i>
+                    <input type="text" class="grow" placeholder="Search issues..." />
+                </label>
+
+                <button class="btn btn-primary font-semibold text-base shadow-none text-white transition duration-300 hover:scale-[1.01] hover:bg-blue-700 hover:opacity-95 hover:shadow-md"><i class="fa-solid fa-plus"></i> New Issue</button>  
+            </div>
+        
+            <!-- Mobile Menu -->
+            <div class="dropdown dropdown-end md:hidden">
+                <label tabindex="0" class="btn btn-ghost">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </label>
+                <div tabindex="0" class="dropdown-content mt-3 z-[1] p-4 shadow bg-base-100 rounded-box w-64 space-y-3">
+                    <label class="input input-bordered w-full border-[#E4E4E7] text-base text-[#64748B]">
+                        <i class="fa-solid fa-magnifying-glass opacity-50"></i>
+                        <input type="text" class="grow" placeholder="Search issues..." />
+                    </label>
+                    
+                    <button class="btn btn-primary font-semibold text-base shadow-none w-full mx-auto text-white transition duration-300 hover:scale-[1.01] hover:bg-blue-700 hover:opacity-95 hover:shadow-md"><i class="fa-solid fa-plus"></i> New Issue</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- tab section --md:w-7/10 -->
+    <section class="">
+        <div class="sm:w-11/12 mx-auto p-6 m-1 bg-white md:w-7/10 md:mt-14">
+            <!-- jobs toggles -->
+            <div class="space-x-2">
+                <button onclick="showOnly(), toggleBtn0()" id="" class="btn bg-primary text-white px-7 md:px-12">All</button>
+                <button onclick="showOnly(), toggleBtn1()" id="" class="btn bg-white rounded border-[#E4E4E7] text-[#64748B] px-6 md:px-10">Open</button>
+                <button onclick="showOnly(), toggleBtn2()" id="" class="btn bg-white rounded border-[#E4E4E7] text-[#64748B] px-6 md:px-10">Closed</button>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="./scripts/main.js"></script>
+</body>
+</html>
