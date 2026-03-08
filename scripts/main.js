@@ -2,7 +2,9 @@ const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
 fetch(url)
     .then(res => res.json())
-    .then(allData => totalIssues(allData));
+    .then(allData => {
+        totalIssues(allData);
+    });
     
 // showing the number of total issues 
 function totalIssues(allData) {
@@ -16,6 +18,7 @@ function totalIssues(allData) {
     allData.data.forEach(issue => {
         const div = document.createElement("div");
         div.classList.add("issue-card");
+        div.classList.add(issue.status.toLowerCase());
 
         const labelsHTML = issue.labels.map(label => createLabelBadge(label)).join("");
         const priorityHTML = createPriorityBadge(issue.priority);
@@ -134,4 +137,57 @@ function createPriorityBadge(priority) {
     return `
         <span class="badge border-none font-semibold text-xs px-7 py-2 rounded-full ${style.bg} ${style.text}">${priority.toUpperCase()}</span>
     `;
+}
+
+
+// filter issues
+
+// set active effect
+function showOnly(tabName) {
+    const allBtn = document.getElementById("tab-all");
+    const openBtn = document.getElementById("tab-open");
+    const closedBtn = document.getElementById("tab-closed");
+
+    // remove active style from all
+    allBtn.classList.remove("bg-primary", "text-white");
+    openBtn.classList.remove("bg-primary", "text-white");
+    closedBtn.classList.remove("bg-primary", "text-white");
+
+    // add inactive style to all
+    allBtn.classList.add("bg-white", "text-[#64748B]", "border-[#E4E4E7]");
+    openBtn.classList.add("bg-white", "text-[#64748B]", "border-[#E4E4E7]");
+    closedBtn.classList.add("bg-white", "text-[#64748B]", "border-[#E4E4E7]");
+
+    // activate clicked tab
+    if (tabName === "all") {
+        allBtn.classList.add("bg-primary", "text-white");
+        allBtn.classList.remove("bg-white", "text-[#64748B]");
+    } else if (tabName === "open") {
+        openBtn.classList.add("bg-primary", "text-white");
+        openBtn.classList.remove("bg-white", "text-[#64748B]");
+    } else if (tabName === "closed") {
+        closedBtn.classList.add("bg-primary", "text-white");
+        closedBtn.classList.remove("bg-white", "text-[#64748B]");
+    }
+}
+
+// filtering the issues in respective tabs
+function filterIssues(tabName) {
+    const cards = document.querySelectorAll(".issue-card");
+    let total = 0;
+
+    for (let i = 0; i < cards.length; i++) {
+        if (tabName === "all") {
+            cards[i].style.display = "";
+            total++;
+        } else if (cards[i].classList.contains(tabName)) {
+            cards[i].style.display = "";
+            total++;
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+
+    document.getElementById("total-issues").innerText = total;
+    showOnly(tabName);
 }
