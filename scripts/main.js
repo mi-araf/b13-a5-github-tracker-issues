@@ -28,7 +28,7 @@ function totalIssues(allData) {
         const statusCardClass = getStatusCardClass(issue.status);
 
         div.innerHTML = `
-        <div class="card bg-base-100 shadow-md rounded-xl w-full h-full border border-base-200 ${statusCardClass}" onclick="loadIssueDetail(${issue.id})">
+        <div class="card bg-base-100 shadow-md rounded-xl w-full h-full border border-base-200 transition-all duration-600 ease-out hover:-translate-y-1 hover:shadow-xl hover:scale-[1.01] ${statusCardClass}" onclick="loadIssueDetail(${issue.id})">
             <div class="card-body p-5 flex flex-col h-full gap-3 space-y-[2px]">
 
                 <div class="flex items-center justify-between">
@@ -48,7 +48,7 @@ function totalIssues(allData) {
 
                 <div class="text-xs text-[#64748B] space-y-2">
                     <p>#<span id="">${issue.id}</span> by <span id="">${issue.author}</span></p>
-                    <p id="">${new Date(issue.updatedAt).toLocaleDateString("en-US")}</p>
+                    <p id="">${new Date(issue.createdAt).toLocaleDateString("en-US")}</p>
                 </div>
             </div>
             </div>
@@ -108,7 +108,7 @@ const displayIssueDetail = (issue) => {
 
     detailsBox.innerHTML = `
     <h2 id="" class="card-title text-2xl font-bold pt-1">${issue.title || 'Untitled'}</h2>
-    <p>${statusHTML}<span class="text-xs text-[#64748B]"> &nbsp; <span class="text-base font-extrabold">•</span> &nbsp; Opened by <span>${issue.author || 'unknown'}</span></span> <span class="text-xs text-[#64748B]"> &nbsp; <span class="text-base font-extrabold">•</span> &nbsp; ${new Date(issue.updatedAt || Date.now()).toLocaleDateString("en-GB")}</span></p>
+    <p>${statusHTML}<span class="text-xs text-[#64748B]"> &nbsp; <span class="text-base font-extrabold">•</span> &nbsp; Opened by <span>${issue.author || 'unknown'}</span></span> <span class="text-xs text-[#64748B]"> &nbsp; <span class="text-base font-extrabold">•</span> &nbsp; ${new Date(issue.createdAt || Date.now()).toLocaleDateString("en-GB")}</span></p>
 
     <!-- tags -->
     <div class="flex gap-2 flex-wrap mt-6">${tagsElements}</div>
@@ -291,7 +291,7 @@ const inputBox = document.querySelectorAll(".input-search-box");
 inputBox.forEach(input => {
     input.addEventListener("input", () => {
         const word = input.value.trim().toLowerCase();
-        console.log(word);
+        // console.log(word);
 
         if (word == "") {
             fetch(url)
@@ -305,9 +305,24 @@ inputBox.forEach(input => {
             fetch(searchUrl)
                 .then(res => res.json())
                 .then(allData => {
-                    console.log(allData);
+                    // console.log(allData);
                     totalIssues(allData);
                 });
         }
+    });
+})
+
+// to clear the input field value
+document.querySelectorAll(".clear-search-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        let inputField = btn.parentElement.querySelector(".input-search-box");
+        inputField.value = "";
+        if (inputField.value == "") {
+            fetch(url)
+                .then(res => res.json())
+                .then(allData => {
+                    totalIssues(allData);
+                });
+        };
     });
 })
