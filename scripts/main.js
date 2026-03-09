@@ -1,9 +1,12 @@
 const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
+manageSpinner(true);
+
 fetch(url)
     .then(res => res.json())
     .then(allData => {
         totalIssues(allData);
+        manageSpinner(false);
     });
     
 // showing the number of total issues 
@@ -83,6 +86,7 @@ async function loadIssueDetail(id) {
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
     const res = await fetch(url);
     const details = await res.json();
+
     displayIssueDetail(details.data);
 }
 const displayIssueDetail = (issue) => {
@@ -266,3 +270,44 @@ function filterIssues(tabName) {
     document.getElementById("total-issues").innerText = total;
     showOnly(tabName);
 }
+
+// showing spinner while loading
+function manageSpinner (status) {
+    const spinner = document.getElementById("spinner");
+    const issuesContainer = document.getElementById("issues-container");
+    
+    if (status) {
+        spinner.classList.remove("hiden");
+        issuesContainer.classList.add("hiden");
+    } else {
+        spinner.classList.add("hiden");
+        issuesContainer.classList.remove("hiden");
+    }
+}
+
+// search function
+const inputBox = document.querySelectorAll(".input-search-box");
+
+inputBox.forEach(input => {
+    input.addEventListener("input", () => {
+        const word = input.value.trim().toLowerCase();
+        console.log(word);
+
+        if (word == "") {
+            fetch(url)
+                .then(res => res.json())
+                .then(allData => {
+                    totalIssues(allData);
+                });
+        } else {
+            const searchUrl = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${word}`;
+
+            fetch(searchUrl)
+                .then(res => res.json())
+                .then(allData => {
+                    console.log(allData);
+                    totalIssues(allData);
+                });
+        }
+    });
+})

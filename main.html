@@ -29,7 +29,10 @@
             <div class="hidden md:flex items-center gap-4">
                 <label class="input input-bordered border-[#E4E4E7] w-[300px] text-base text-[#64748B]">
                     <i class="fa-solid fa-magnifying-glass opacity-50"></i>
-                    <input type="text" class="grow" placeholder="Search issues..." />
+                    <input type="text" class="grow input-search-box" placeholder="Search issues..." />
+                        <button type="button" class="clear-search-btn cursor-pointer">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                         </button>
                 </label>
 
                 <button class="btn btn-primary font-semibold text-base shadow-none text-white transition duration-300 hover:scale-[1.01] hover:bg-blue-700 hover:opacity-95 hover:shadow-md"><i class="fa-solid fa-plus"></i> New Issue</button>  
@@ -43,7 +46,7 @@
                 <div tabindex="0" class="dropdown-content mt-3 z-[1] p-4 shadow bg-base-100 rounded-box w-64 space-y-3">
                     <label class="input input-bordered w-full border-[#E4E4E7] text-base text-[#64748B]">
                         <i class="fa-solid fa-magnifying-glass opacity-50"></i>
-                        <input type="text" class="grow" placeholder="Search issues..." />
+                        <input type="text" class="grow input-search-box" placeholder="Search issues..." />
                     </label>
                     
                     <button class="btn btn-primary font-semibold text-base shadow-none w-full mx-auto text-white transition duration-300 hover:scale-[1.01] hover:bg-blue-700 hover:opacity-95 hover:shadow-md"><i class="fa-solid fa-plus"></i> New Issue</button>
@@ -79,6 +82,13 @@
         </div>
     </section>
     
+    <!-- loading spinner -->
+    <section id="spinner" class="grid grid-cols-3 gap-4 w-fit mx-auto py-10 hiden">
+        <div class="loading loading-cricle loading-xl mr-2"></div>
+        <div class="loading loading-dots loading-xl"></div>
+        <div class="loading loading-circle loading-xl"></div>
+    </section>
+
     <!-- card designing -->
     <section id="issues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch border-t border-[#d7d7d9] bg-[#FBFBFB] sm:w-11/12 mx-auto p-6 shadow-md rounded-b-lg md:w-8/10">
         <!-- card's codes -->
