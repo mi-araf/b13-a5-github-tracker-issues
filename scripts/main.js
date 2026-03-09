@@ -25,7 +25,7 @@ function totalIssues(allData) {
         const statusCardClass = getStatusCardClass(issue.status);
 
         div.innerHTML = `
-        <div class="card bg-base-100 shadow-md rounded-xl w-full h-full border border-base-200 ${statusCardClass}">
+        <div class="card bg-base-100 shadow-md rounded-xl w-full h-full border border-base-200 ${statusCardClass}" onclick="loadIssueDetail(${issue.id})">
             <div class="card-body p-5 flex flex-col h-full gap-3 space-y-[2px]">
 
                 <div class="flex items-center justify-between">
@@ -33,7 +33,7 @@ function totalIssues(allData) {
                     <span class="">${priorityHTML}</span>
                 </div>
                 
-                <h2 id="" class="card-title text-sm font-semibold pt-1">${issue.title}</h2>
+                <h2 id="" class="card-title text-base font-semibold pt-1">${issue.title}</h2>
                 <div class="flex-1 overflow-hidden">
                     <p id="" class="text-sm text-[#64748B] line-clamp-2 ">${issue.description}</p>
                 </div>
@@ -66,6 +66,59 @@ function getStatusCardClass (status) {
     }
 }
 
+// badge --> shows issue status in details modal
+function createStatusBadge(status) {
+    const stat = (status || '').toLowerCase();
+    if (stat === 'open' || stat === 'opened') {
+        return `<span class="badge bg-[#00A96E] rounded-full text-white">Opened</span>`;
+    } else if (stat === 'closed' || stat === 'close') {
+        return `<span class="badge bg-[#A855F7] rounded-full text-white">Closed</span>`;
+    } else {
+        return `<span class="badge badge-outline">Unknown</span>`;
+    }
+}
+
+// load + fetch issue detail
+async function loadIssueDetail(id) {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const details = await res.json();
+    displayIssueDetail(details.data);
+}
+const displayIssueDetail = (issue) => {
+    const detailsBox = document.getElementById("details-container");
+    detailsBox.classList.add("space-y-3");
+
+    const statusHTML = createStatusBadge(issue.status);
+
+    // tags
+    let tagsElements = '<span class="text-sm text-[#64748B]">No tags</span>';
+    if (issue.labels && issue.labels.length) {
+        tagsElements = issue.labels.map(label => createLabelBadge(label)).join('');
+    }
+
+    // priority badge value
+    const priorityHTML = issue.priority ? createModalPriorityBadge(issue.priority) : '<span class="text-sm text-[#64748B]">Unset</span>';
+
+    const assignee = issue.assignee || '<span class="text-[#64748B]">——</span>';
+
+    detailsBox.innerHTML = `
+    <h2 id="" class="card-title text-2xl font-bold pt-1">${issue.title || 'Untitled'}</h2>
+    <p>${statusHTML}<span class="text-xs text-[#64748B]"> &nbsp; <span class="text-base font-extrabold">•</span> &nbsp; Opened by <span>${issue.author || 'unknown'}</span></span> <span class="text-xs text-[#64748B]"> &nbsp; <span class="text-base font-extrabold">•</span> &nbsp; ${new Date(issue.updatedAt || Date.now()).toLocaleDateString("en-GB")}</span></p>
+
+    <!-- tags -->
+    <div class="flex gap-2 flex-wrap mt-6">${tagsElements}</div>
+
+    <p id="" class="text-base text-[#64748B] my-6">${issue.description || '<em>No description provided</em>'}</p>
+
+    <div class="bg-[#F8FAFC] my-4 p-4 flex sm:gap-50 gap-26">
+        <div class="text-base"><span class="text-[#64748B]">Assignee:</span> <br> <span class="text-[#1F2937] font-semibold">${assignee}</span></div>
+        <div><span class="text-base text-[#64748B]">Priority:</span> <br> <span>${priorityHTML}</span></div>
+    </div>
+    `;
+
+    document.getElementById("issue_modal").showModal();
+};
 
 // function for dynamic badge
 function createLabelBadge(label) {
@@ -96,7 +149,6 @@ function createLabelBadge(label) {
         }
     };
     
-    // fallback style if unknown label comes
     const style = labelStyles[label.toLowerCase()] || {
         bg: "bg-gray-100",
         text: "text-gray-600",
@@ -136,6 +188,29 @@ function createPriorityBadge(priority) {
 
     return `
         <span class="badge border-none font-semibold text-xs px-7 py-2 rounded-full ${style.bg} ${style.text}">${priority.toUpperCase()}</span>
+    `;
+}
+
+// modal's priyority badge
+function createModalPriorityBadge(priority) {
+    const priorityStyles = {
+        "high": {
+            bg: "bg-[#EF4444]",
+        },
+        "medium": {
+            bg: "bg-[#F59E0B]",
+        },
+        "low": {
+            bg: "bg-[#9CA3AF]",
+        }
+    };
+
+    const style = priorityStyles[priority.toLowerCase()] || {
+        bg: "bg-gray-100",
+    };
+
+    return `
+        <span class="badge border-none font-medium text-xs px-4 py-2 rounded-full ${style.bg} text-white">${priority.toUpperCase()}</span>
     `;
 }
 
